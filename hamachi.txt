@@ -1,4 +1,0 @@
-root
-Rhubarb1
-vpn: sundrop.bit
-

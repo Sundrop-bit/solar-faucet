@@ -5,7 +5,7 @@ BLOCKCHAIN_PASSWORD = ""
 BLOCKCHAIN_PASSWORD2 = ""
 BLOCKCHAIN_FEE_IN_SATOSHI = 0
 
-RECAPTCHA_PRIVATE_KEY = ""
+RECAPTCHA_PRIVATE_KEY = "6Le4nvkSAAAAAMY4Z5oP5PmEPxTv-83oDYeT6Y3P"
 
 is_captcha_valid = (clientIP, data) ->
   captcha_data = #for recaptcha

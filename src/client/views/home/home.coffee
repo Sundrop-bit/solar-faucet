@@ -1,10 +1,17 @@
 Template.home.rendered = ->
+  IP_ADDRESS = "72.131.33.128"
+  RECAPTCHA_PUBLIC_KEY = "6Le4nvkSAAAAAMZZPSplk1vxvWeGaclt-Pz-QkxP"
+
   #SEO Page Title & Description
   document.title = "Sundrop .BIT Faucet"
   $("<meta>", { name: "description", content: document.title }).appendTo "head"
 
+  if location.hostname isnt IP_ADDRESS
+    location.href = IP_ADDRESS
+    return
+
   $.getScript "http://www.google.com/recaptcha/api/js/recaptcha_ajax.js", ->
-    Recaptcha.create "6Ldf7vQSAAAAAEboq3LTtRJriyJ9KOdNzB4IN9xm", "rendered-captcha-container",
+    Recaptcha.create RECAPTCHA_PUBLIC_KEY, "rendered-captcha-container",
       theme: "red"
       callback: Recaptcha.focus_response_field
 
@@ -18,8 +25,6 @@ Template.home.events
       captcha_challenge_id: Recaptcha.get_challenge(),
       captcha_solution: Recaptcha.get_response()
       destination: $('#destination').val()
-      #add the data from form inputs here
-    console.log "[home:21 - calling meteor]", formData
     Meteor.call 'payout', formData, (error, result) ->
       if (result.success)
         alert('Bitcoin sent to your address!\nEnjoy and thank you for using Sundrop.bit')
@@ -29,8 +34,8 @@ Template.home.events
         # alert error message according to received code
         switch result.error
           when 'captcha_verification_failed'
-            alert('captcha solution is wrong!')
+            alert('Captcha solution is wrong, please try again.')
           when 'other_error_on_form_submit'
-            alert('other error')
+            alert('Sorry, there has been an error processing this. Please contact support@sundrop.bit')
           else
-            alert('error')
+            alert('Sorry, there has been an error processing this. Please contact support@sundrop.bit')
